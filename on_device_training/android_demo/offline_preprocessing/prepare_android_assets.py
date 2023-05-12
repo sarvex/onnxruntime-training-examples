@@ -117,8 +117,16 @@ def process_and_save_data(data_loader, data_loc, num_batches):
         labels_pack.append(labels.detach().numpy().flatten())
 
         if (i + 1) % num_batches == 0:
-            save_data_as_bin(inputs_pack, os.path.join(data_loc, "input_" + str(i // num_batches) + ".bin"), "float")
-            save_data_as_bin(labels_pack, os.path.join(data_loc, "labels_" + str(i // num_batches) + ".bin"), "int")
+            save_data_as_bin(
+                inputs_pack,
+                os.path.join(data_loc, f"input_{str(i // num_batches)}.bin"),
+                "float",
+            )
+            save_data_as_bin(
+                labels_pack,
+                os.path.join(data_loc, f"labels_{str(i // num_batches)}.bin"),
+                "int",
+            )
             inputs_pack, labels_pack = [], []
 
 

@@ -26,10 +26,7 @@ def postprocess(tokens, start, end):
     if answer_end >= answer_start:
         answer = tokens[answer_start]
         for i in range(answer_start+1, answer_end+1):
-            if tokens[i][0:2] == "##":
-                answer += tokens[i][2:]
-            else:
-                answer += " " + tokens[i]
+            answer += tokens[i][2:] if tokens[i][:2] == "##" else f" {tokens[i]}"
         results['answer'] = answer.capitalize()
     else:
         results['error'] = "I am unable to find the answer to this question. Can you please ask another question?"
@@ -45,9 +42,9 @@ def init():
     # use AZUREML_MODEL_DIR to get your deployed model(s). If multiple models are deployed, 
     # model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), '$MODEL_NAME/$VERSION/$MODEL_FILE_NAME')
     model_dir = os.getenv('AZUREML_MODEL_DIR')
-    if model_dir == None:
+    if model_dir is None:
         model_dir = "./"
-    model_path = os.path.join(model_dir, model_name + ".onnx")
+    model_path = os.path.join(model_dir, f"{model_name}.onnx")
 
     # Create the tokenizer
     tokenizer = transformers.BertTokenizer.from_pretrained(model_name)

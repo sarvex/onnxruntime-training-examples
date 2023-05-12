@@ -69,7 +69,7 @@ CONFIG_ARGS_DICT = {
 # Check core SDK version number
 print("SDK version:", azureml.core.VERSION)
 
-print("The arguments are: " + str(sys.argv))
+print(f"The arguments are: {str(sys.argv)}")
 
 parser = argparse.ArgumentParser()
 
@@ -153,7 +153,7 @@ if not args.local_run:
     if not args.skip_docker_build:
         hf_ort_env.register(ws).build(ws).wait_for_completion()
 
-model_experiment_name = 'hf-ortmodule-recipe-' + args.hf_model
+model_experiment_name = f'hf-ortmodule-recipe-{args.hf_model}'
 
 model_run_args_base = base_args_dict[args.hf_model]
 model_run_scripts = RUN_SCRIPT_DICT[args.hf_model]
@@ -196,7 +196,7 @@ else:
         compute_target=gpu_compute_target,
         environment=hf_ort_env,
         distributed_job_config=distr_config)
-    
+
     print(f"Submitting run for model: {args.hf_model}, config: {args.run_config}")
     run = model_experiment.submit(model_run_config)
     cuda_version = "11.3"

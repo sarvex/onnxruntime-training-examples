@@ -27,7 +27,7 @@ def infer():
         subprocess.call(["python", "-m", "onnxruntime.transformers.models.whisper.convert_to_onnx", "-m", "openai/whisper-small", "--output", "whisper-small", "--use_external_data_format", "--state_dict_path", "pytorch_model.bin"])
 
     sess = InferenceSession("whisper-small/openai/whisper-small_beamsearch.onnx", providers=["CUDAExecutionProvider"])
-    
+
     beam_size = 1
     NUM_RETURN_SEQUENCES = 1
     input_shape = [1, N_MELS, N_FRAMES]
@@ -49,7 +49,7 @@ def infer():
 
     # Timed run
     start = time.time()
-    for i in range(10):
+    for _ in range(10):
         _ = sess.run(None, ort_inputs)
     diff = time.time() - start
     print(f"time {diff/10} sec")

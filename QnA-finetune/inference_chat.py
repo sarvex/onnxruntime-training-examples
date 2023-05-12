@@ -42,7 +42,7 @@ def infer(args):
 
     question = "What is ONNX Runtime?"
     print("Example question:", question)
-    while (question):
+    while question:
         # tokenize test data
         encoding = tokenizer(question, context, return_tensors="pt")
         input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
@@ -71,7 +71,7 @@ def infer(args):
         print("Answer: ", answer_tokens_to_string)
 
         # brag about how fast we are
-        print("Inference Time:", str(end - start), "seconds")
+        print("Inference Time:", end - start, "seconds")
 
         # reset data location for next question
         input_ids = input_ids.to("cpu")

@@ -90,7 +90,7 @@ def main(raw_args=None):
 
     # initialize training arguments
     training_args_dict = {
-        "output_dir": ".outputs", # for intermediary checkpoints
+        "output_dir": ".outputs",
         "do_train": True,
         "do_eval": True,
         "per_device_train_batch_size": 16,
@@ -100,8 +100,8 @@ def main(raw_args=None):
         "weight_decay": 0.01,
         "fp16": True,
         "deepspeed": "ds_config_zero_1.json" if args.deepspeed else None,
-        "torch_compile": True if (torch.__version__ >= "2.0.0" and not args.ort) else False,
-        "label_names": ["start_positions", "end_positions"]
+        "torch_compile": torch.__version__ >= "2.0.0" and not args.ort,
+        "label_names": ["start_positions", "end_positions"],
     }
 
     training_args = TrainingArguments(**training_args_dict)

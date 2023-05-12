@@ -26,7 +26,7 @@ def infer():
 
     # Timed run
     start = time.time()
-    for i in range(10):
+    for _ in range(10):
         _ = model.generate(inputs=input_features)
     diff = time.time() - start
     print(f"time {diff/10} sec")
